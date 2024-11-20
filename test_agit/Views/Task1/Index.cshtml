@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Task 1";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (ViewBag.error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.error
+    </div>
+}
+
+<form method="post" asp-action="calculate">
+    <div>
+        <label>Input Rencana Produksi (Pisahkan dengan koma):</label>
+        <input type="text" name="plans" class="form-control" placeholder="4,5,1,4,6" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Calculate</button>
+</form>
+
+@if (ViewBag.initialPlans != null && ViewBag.adjustedPlans != null)
+{
+    <h3>Hasil:</h3>
+    <p><strong>Rencana Awal : </strong> @string.Join(", ", ViewBag.initialPlans as List<int>)</p>
+    <p><strong>Rencana Final : </strong> @string.Join(", ", ViewBag.adjustedPlans as List<int>)</p>
+}

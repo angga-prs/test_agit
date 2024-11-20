@@ -1,0 +1,64 @@
+﻿@model List<ProductionPlan>
+@{
+    ViewData["Title"] = "Task 2";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (ViewBag.error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.error
+    </div>
+}
+
+@if (ViewBag.message != null)
+{
+    @if(ViewBag.status == 1)
+    {
+        <div class="alert alert-success">
+            @ViewBag.message
+        </div>
+    } else
+    {
+        <div class="alert alert-danger">
+            @ViewBag.message
+        </div>
+    }
+}
+
+<form method="post" asp-action="Calculate">
+    <div>
+        <label>Input Rencana Produksi (Pisahkan dengan koma):</label>
+        <input type="text" name="plans" class="form-control" placeholder="4,5,1,7,6,4,0" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Calculate</button>
+</form>
+
+<h3>Daftar Rencana Produksi :</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Rencana Awal</th>
+            <th>Rencana Final</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var plan in Model)
+        {
+            <tr>
+                <td>@plan.id</td>
+                <td>@plan.initial_plan</td>
+                <td>@plan.adjusted_plan</td>
+                <td>
+                    <form method="post" asp-action="Delete" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                        <input type="hidden" name="id" value="@plan.id" />
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
